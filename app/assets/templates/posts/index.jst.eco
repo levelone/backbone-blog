@@ -1,0 +1,10 @@
+<div class='post-container'>
+<h1>Posts</h1>
+
+<form id="new_post">
+  <input type="text" name="title" id="new_post_title">
+  <input type="submit" value="Add">
+</form>
+
+<ul id="posts"></ul>
+</div>

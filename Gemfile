@@ -21,6 +21,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'remotipart', '~> 1.2'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -37,4 +38,14 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
-gem 'backbone-on-rails'
+# gem 'backbone-on-rails'
+
+# Using backbone/underscore api
+# Needs this gem to use jst.eco files
+gem 'eco'
+
+# Work around for rails s 
+# Using Thin instead of Webricks
+gem 'thin'
+
+gem 'awesome_print', require: 'ap'

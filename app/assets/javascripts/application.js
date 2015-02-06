@@ -12,12 +12,17 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require underscore
-//= require backbone
-//= require backbone_blog
+//= require jquery.remotipart
+//= require ./vendor/underscore
+//= require ./vendor/backbone
+//= require ./vendor/backbone-associations
+//= require ./backbone/backbone_blog
+//
+//= require_tree ./vendor
 //= require_tree ../templates
-//= require_tree ./models
-//= require_tree ./collections
-//= require_tree ./views
-//= require_tree ./routers
+//= require_tree ./backbone/models
+//= require_tree ./backbone/collections
+//= require_tree ./backbone/views
+//= require_tree ./backbone/routers
+//= require_tree ./backbone
 //= require_tree .

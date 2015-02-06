@@ -3,7 +3,9 @@ window.BackboneBlog =
   Collections: {}
   Views: {}
   Routers: {}
-  initialize: -> alert 'Hello from Backbone!'
+  initialize: ->
+    new BackboneBlog.Routers.Posts()
+    Backbone.history.start()
 
 $(document).ready ->
   BackboneBlog.initialize()
