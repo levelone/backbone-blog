@@ -1,5 +1,5 @@
 <%= @post.get('id') %>.
 <%= @post.get('title') %>
-<a id='show_post' href='#'>Show</a>
-<a id='edit_post' href='#'>Edit</a>
-<a id='delete_post' href='#'>Remove</a>
+<a href="#posts/<%= @post.get('id') %>">View</a>
+<a href="#posts/<%= @post.get('id') %>/edit">Edit</a>
+<a id='remove_post' href='#'>Remove</a>

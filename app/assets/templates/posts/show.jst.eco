@@ -1,1 +1,9 @@
-<h1>Post Show</h1>
+<h1><%= @post.get('title') %></h1>
+
+<ul>
+  <li><%= @post.get('id') %></li>
+  <li><%= @post.get('title') %></li>
+</ul>
+
+<a href=''>View All</a>
+<a href='#post/<%= @post.get('id') %>/edit'>Edit Post</a>

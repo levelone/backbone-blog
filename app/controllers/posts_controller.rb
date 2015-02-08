@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   def show
     respond_with Post.find(params[:id])
   end
-  
+
   def create
     respond_with Post.create(params[:post])
   end

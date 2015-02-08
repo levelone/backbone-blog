@@ -1,10 +1,12 @@
 class BackboneBlog.Views.PostsIndex extends Backbone.View
   template: JST['posts/index']
-  events:
-    'submit #new_post' : 'createPost'
+  # events:
+  #   'submit #new_post' : 'createPost'
 
   initialize: ->
+    # document.title = "#{document.title}"
     @collection.on('add', @appendPost, this)
+  #   @collection.on('all', @appendPost, this)
 
   render: ->
     @collection.fetch(add: true)
@@ -13,6 +15,7 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
     this
 
   appendPost: (post) ->
+    console.log 'here'
     view = new BackboneBlog.Views.Post(model: post)
     $('#posts').append(view.render().el)
 
@@ -24,7 +27,7 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
       wait: true
       success: ->
         $('#new_post')[0].reset()
-        
+
       error: @handleError
 
   handleError: (post, response) ->
