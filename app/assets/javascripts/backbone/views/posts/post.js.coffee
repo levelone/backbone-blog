@@ -7,6 +7,7 @@ class BackboneBlog.Views.Post extends Backbone.View
 
   render: ->
     $(@el).html(@template(post: @model))
+    console.log this
     this
 
   removePost: (event) ->

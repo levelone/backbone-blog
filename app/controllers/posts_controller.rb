@@ -13,6 +13,10 @@ class PostsController < ApplicationController
     respond_with Post.create(params[:post])
   end
 
+  def edit
+    respond_with Post.find(params[:id])
+  end
+
   def update
     respond_with Post.update(params[:id], params[:post])
   end
