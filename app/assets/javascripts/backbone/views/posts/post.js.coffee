@@ -5,6 +5,10 @@ class BackboneBlog.Views.Post extends Backbone.View
     'click #remove_post': 'removePost'
   }
 
+  initialize: (options) ->
+    @page = options.page
+    console.log @page
+
   render: ->
     $(@el).html(@template(post: @model))
     console.log this

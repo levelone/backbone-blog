@@ -1,16 +1,19 @@
 class BackboneBlog.Views.PostsIndex extends Backbone.View
   template: JST['posts/index']
 
-  initialize: ->
+  initialize: (options) ->
+    @pages = options.pages
     @collection.on('add', @appendPost, this)
 
   render: ->
     @collection.fetch(add: true)
     @setElement(@template())
+    console.log this
+    debugger
     this
 
   appendPost: (post) ->
-    view = new BackboneBlog.Views.Post(model: post)
+    view = new BackboneBlog.Views.Post(model: post, page: @pages)
     $('#posts').append(view.render().el)
 
   createPost: (event) ->

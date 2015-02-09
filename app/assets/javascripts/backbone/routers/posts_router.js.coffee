@@ -1,6 +1,7 @@
 class BackboneBlog.Routers.Posts extends Backbone.Router
   routes:
     ''                : 'index'
+    'posts/:page'     : 'index'
     'posts/new'       : 'create'
     'posts/:id/edit'  : 'edit'
     'posts/:id'       : 'show'
@@ -8,8 +9,11 @@ class BackboneBlog.Routers.Posts extends Backbone.Router
   initialize: ->
     @collection = new BackboneBlog.Collections.Posts()
 
-  index: ->
-    currentView = new BackboneBlog.Views.PostsIndex(collection: @collection)
+  index: (page = 1) ->
+    # $('#container').html JST['helpers/loading']
+    currentView = new BackboneBlog.Views.PostsIndex(collection: @collection, pages: page)
+    # x = currentView.collection
+    #.fetch(data {page: page})
     $('#container').html currentView.render().el
 
   create: ->
