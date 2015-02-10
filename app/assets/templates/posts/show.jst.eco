@@ -6,4 +6,4 @@
 </ul>
 
 <a href=''>View All</a>
-<a href='#post/<%= @post.get('id') %>/edit'>Edit Post</a>
+<a href='#posts/<%= @post.get('id') %>/edit'>Edit</a>

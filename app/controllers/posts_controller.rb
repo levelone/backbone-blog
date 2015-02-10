@@ -2,7 +2,16 @@ class PostsController < ApplicationController
   respond_to :json
 
   def index
-    respond_with Post.all
+    page      = params[:page] ||= 1
+    per_page  = params[:per_page] ||= 10
+    posts     = Post.page(page).per(per_page)
+
+    render :json => {
+      page: page,
+      per_page: per_page,
+      total_pages: posts.total_pages,
+      models: posts.all
+    }
   end
 
   def show

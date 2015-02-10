@@ -43,9 +43,12 @@ gem 'remotipart', '~> 1.2'
 # Using backbone/underscore api
 # Needs this gem to use jst.eco files
 gem 'eco'
+# gem 'ejs'
 
 # Work around for rails s 
 # Using Thin instead of Webricks
 gem 'thin'
 
 gem 'awesome_print', require: 'ap'
+gem 'kaminari'
+gem 'pry-debugger'
