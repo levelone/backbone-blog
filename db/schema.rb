@@ -11,12 +11,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150205020722) do
+ActiveRecord::Schema.define(:version => 20150205020725) do
+
+  create_table "attachments", :force => true do |t|
+    t.string   "title"
+    t.string   "file_type"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "authors", :force => true do |t|
     t.integer  "age"
     t.string   "fname"
     t.string   "lname"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "comments", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -29,6 +45,12 @@ ActiveRecord::Schema.define(:version => 20150205020722) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "author_id"
+  end
+
+  create_table "tags", :force => true do |t|
+    t.string   "tag_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
