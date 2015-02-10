@@ -1,6 +1,7 @@
 <div class="post-container">
-  <form id="new_post">
+  <form id="new_post" url="#posts/<%= @post.get('id') %>" method="put">
     <input type="text" name="title" id="new_post_title" value="<%= @post.get('title') %>">
     <input type="submit" value="Save">
+    <input type="hidden" name="id" value="<%= @post.get('id') %>">
   </form>
 </div>

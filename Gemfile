@@ -51,4 +51,4 @@ gem 'thin'
 
 gem 'awesome_print', require: 'ap'
 gem 'kaminari'
-gem 'pry-debugger'
+# gem 'pry-debugger'

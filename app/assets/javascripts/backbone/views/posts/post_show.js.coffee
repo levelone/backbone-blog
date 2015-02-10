@@ -1,16 +1,14 @@
 class BackboneBlog.Views.PostShow extends Backbone.View
   template: JST['posts/show']
+  # templates:
+  #   show: JST['posts/show']
 
   initialize: (options) ->
-    postId = options.postId
-    @post = new BackboneBlog.Models.Post(id: postId)
+    @post   = @model
+    @router = options.router
 
   render: ->
-    @post.fetch
-      success: (resp) =>
-        @renderTemplate()
-    this
-
-  renderTemplate: ->
+    @post.fetch()
     $(@el).html(@template(post: @post))
-    this
+    @
+    # @setElement(@templates.show.html(post: @post))

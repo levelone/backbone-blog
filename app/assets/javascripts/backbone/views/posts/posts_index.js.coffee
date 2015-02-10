@@ -11,7 +11,7 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
     _.bindAll this, 'previous', 'next', 'render'
     @collection.bind('refresh', this)
     @collection.on 'read', @reloadTable, this
-    @collection.on('add', @appendPost, this)
+    @collection.on 'add', @appendPost, this
     # @pagination = new BackboneBlog.Views.Pagination
 
   render: ->
@@ -29,7 +29,7 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
   reloadTable: ->
     # paginationHtml = @pagination.render(@collection).$el
     # @$('.pagination-container').html(paginationHtml)
-    debugger
+    # # debugger
 
   previous: ->
     @collection.previousPage()

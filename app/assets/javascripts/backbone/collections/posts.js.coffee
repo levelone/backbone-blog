@@ -1,7 +1,11 @@
 class BackboneBlog.Collections.Posts extends Backbone.Collection
+  url: '/api/posts'
+
   initialize: ->
-    _.bindAll this, 'parse', 'url', 'pageInfo', 'nextPage', 'previousPage'
-    @page = 1
+    _.bindAll this, 'parse', 'pageInfo', 'nextPage', 'previousPage'
+    # _.bindAll this, 'parse', 'url', 'pageInfo', 'nextPage', 'previousPage'
+    @page     = 1
+    @perPage  = 10
 
   fetch: (options) ->
     options || (options = {})
@@ -20,11 +24,10 @@ class BackboneBlog.Collections.Posts extends Backbone.Collection
     @page = resp.page
     @perPage = resp.per_page
     @totalPages = resp.total_pages
-    debugger
     resp.models
 
-  url: ->
-    '/api/posts' + '?' + $.param({page: @page})
+  # url: ->
+  #   '/api/posts' + '?' + $.param({page: @page})
 
   pageInfo: ->
     info =
@@ -34,21 +37,21 @@ class BackboneBlog.Collections.Posts extends Backbone.Collection
       pages: Math.ceil(@total / @perPage)
       prev: false
       next: false
- 
+
 
     max = Math.min(@total, @page * @perPage)
- 
+
     if (@total == @pages * @perPage)
       max = @total
- 
+
     info.range = [(@page - 1) * @perPage + 1, max]
- 
+
     if (@page > 1)
       @prev = @page - 1
- 
+
     if (@page < info.pages)
       info.next = @page + 1
- 
+
     info
 
   nextPage: ->
