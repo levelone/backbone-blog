@@ -10,8 +10,8 @@ class PostsController < ApplicationController
       page: page,
       per_page: per_page,
       total_pages: posts.total_pages,
-      models: posts.all
-    }
+      models: posts
+    }, include: [:author, :attachments, :comments, :tags]
   end
 
   def show

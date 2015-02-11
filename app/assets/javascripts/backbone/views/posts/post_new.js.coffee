@@ -23,7 +23,7 @@ class BackboneBlog.Views.PostNew extends Backbone.View
 
     attributes =
       title: $('#new_post_title').val()
-      author: $('#new_post_author').val()
+      # author: $('#new_post_author').val()
 
     # Create Model Post in Collection
     @post = @collection.create(attributes, wait: true)

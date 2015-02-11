@@ -7,7 +7,7 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
     'click a.next'     : 'next'
   }
 
-  initialize:  ->
+  initialize: ->
     _.bindAll this, 'previous', 'next', 'render'
     @collection.bind('refresh', this)
     @collection.on 'read', @reloadTable, this

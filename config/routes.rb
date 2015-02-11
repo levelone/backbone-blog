@@ -1,6 +1,10 @@
 BackboneBlog::Application.routes.draw do
+
   scope "api" do
     resources :posts
+    resources :comments
+    resources :attachments
+    resources :tags
     resources :author
   end
 

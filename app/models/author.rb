@@ -1,6 +1,5 @@
 class Author < ActiveRecord::Base
-  attr_accessible :age, :fname, :lname
+  attr_accessible :age, :first_name, :last_name
 
-  has_many :posts
-  # validates_presence_of :title
+  has_many :posts, dependent: :destroy
 end
