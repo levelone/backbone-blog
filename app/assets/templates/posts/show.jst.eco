@@ -1,10 +1,27 @@
 <h1><%= @post.get('title') %></h1>
-<h1><%= @post.get('id') %></h1>
 
-<ul>
+<ul id='post-info'>
   <li><%= @post.get('id') %></li>
   <li><%= @post.get('title') %></li>
 </ul>
 
+<ul id='comments'>
+  <h3>Comments</h3>
+  <% for comment in @post.get('comments'): %>
+    <li><%= comment.id %></li>
+    <li><%= comment.first_name %></li>
+    <li><%= comment.last_name %></li>
+    <li><%= comment.content %></li>
+  <% end %>
+</ul>
+
+<div class="comments-container">
+  <form id="new_comment">
+    <input type="text" name="content" id="new_comment_content">
+    <input type="submit" value="Add">
+  </form>
+</div>
+
 <a href=''>View All</a>
-<a href='#posts/<%= @post.get('id') %>/edit'>Edit</a>
+<a href="#posts/<%= @post.get('id') %>/edit">Edit</a>
+<a id='new-comment' href="#posts/<%= @post.get('id') %>">Leave Comment</a>

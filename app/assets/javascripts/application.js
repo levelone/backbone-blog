@@ -16,6 +16,7 @@
 //= require ./vendor/underscore
 //= require ./vendor/backbone
 //= require ./vendor/backbone-associations
+//= require ./vendor/backbone-relational
 //= require ./backbone/backbone_blog
 //
 //= require_tree ./vendor

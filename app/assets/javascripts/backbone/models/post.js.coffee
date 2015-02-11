@@ -1,9 +1,20 @@
-class BackboneBlog.Models.Post extends Backbone.Model
+class BackboneBlog.Models.Post extends Backbone.RelationalModel
+  default:
+    title: 'Good Morning'
 
-  # url: ->
-  #   "api/posts/#{@id}"
+  relations: [
+    type: Backbone.HasMany
+    key: 'comments'
+    relatedModel: 'Comment'
+    includeInJSON: '_id'
+    reverseRelation:
+      type: Backbone.HasOne
+      includeInJSON: '_id'
+      key: 'post'
+      # 'relatedModel' is automatically set to 'Zoo'; the 'relationType' to 'HasOne'.
+  ]
 
-  defaults: {
-    title: 'Good Morning Backbone Blogger!'
-    # author: 'Marc'
-  }
+BackboneBlog.Models.Post.setup()
+@post = new BackboneBlog.Models.Post(nestedmodel: @comment)
+console.log @post
+

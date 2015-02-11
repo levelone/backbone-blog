@@ -23,9 +23,8 @@ class BackboneBlog.Routers.Posts extends Backbone.Router
     $('#container').html currentView.render().el
 
   show: (id) ->
-    @model = @collection.get(id)
-    console.log id
-    console.log this
+    @model    = @collection.get(id)
+    # @comments = @model.get('comments')
 
-    currentView = new BackboneBlog.Views.PostShow(model: @model, router: this)
+    currentView = new BackboneBlog.Views.PostShow(model: @model, router: this, comments: @comments)
     $('#container').html(currentView.render().el)
