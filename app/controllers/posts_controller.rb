@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   respond_to :json
 
   def index
@@ -10,8 +11,8 @@ class PostsController < ApplicationController
       page: page,
       per_page: per_page,
       total_pages: posts.total_pages,
-      models: posts
-    }, include: [:author, :attachments, :comments, :tags]
+      models: posts, 
+    }, include: [:comments]
   end
 
   def show

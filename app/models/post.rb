@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  attr_accessible :author_id, :content, :permalink, :teaser, :title
+  attr_accessible :author_id, :content, :permalink, :teaser, :title, :comments_attributes
 
   belongs_to :author
 
