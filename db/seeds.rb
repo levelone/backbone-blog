@@ -8,7 +8,7 @@
 
 tag_number = 1
 until tag_number == 5 do
-  tag = Tag.create title: "Category ##{tag_number}"
+  Tag.create name: "Category ##{tag_number}"
 
   tag_number+=1
 end
@@ -16,7 +16,7 @@ end
 
 post_number = 1
 until post_number == 20 do
-  post = Post.create title: "Post title #{post_number}" tag_id: Tag.all.sample
+  post = Post.create title: "Post title #{post_number}"
 
   post_number+=1
 end
