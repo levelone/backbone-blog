@@ -6,5 +6,20 @@
   <li><%= @post.get('title') %></li>
 </ul>
 
+<h3>Comments</h3>
+<% for comment in @post.get('comments'): %>
+  <ul>
+    <li><%= comment.content %></li>
+  </ul>
+<% end %>
+
+<div class="comment-container">
+  <form id="new_comment">
+    <input type="hidden" name="post_id" value="<%= @post.get('id') %>">
+    <input type="text" name="content" id="new_comment_content">
+    <input type="submit" value="Leave Comment">
+  </form>
+</div>
+
 <a href=''>View All</a>
 <a href='#posts/<%= @post.get('id') %>/edit'>Edit</a>
