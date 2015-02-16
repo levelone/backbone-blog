@@ -7,15 +7,19 @@
 </ul>
 
 <h3>Comments</h3>
-<% for comment in @post.get('comments'): %>
-  <ul>
-    <li><%= comment.content %></li>
-  </ul>
-<% end %>
+<ul>
+  <% for comment in @post.get('comments'): %>
+    <li>
+      <%= comment.content %>
+      <a href=''>Edit</a>
+      <a href=''>Remove</a>
+    </li>
+  <% end %>
+</ul>
 
 <div class="comment-container">
   <form id="new_comment">
-    <input type="hidden" name="post_id" value="<%= @post.get('id') %>">
+    <input type="hidden" name="post_id" id="new_comment_post_id" value="<%= @post.get('id') %>">
     <input type="text" name="content" id="new_comment_content">
     <input type="submit" value="Leave Comment">
   </form>

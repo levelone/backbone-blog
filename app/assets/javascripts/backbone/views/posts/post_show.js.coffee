@@ -2,10 +2,13 @@ class BackboneBlog.Views.PostShow extends Backbone.View
   template: JST['posts/show']
   events:
     'submit #new_comment' : 'createComment'
+    'click #destroy_comment' : 'destroyComment'
 
   initialize: (options) ->
     @post   = @model
     @router = options.router
+
+    @commentCollection = new BackboneBlog.Collections.Comments({model: BackboneBlog.Models.Post})
 
   render: ->
     @post.fetch()
@@ -15,12 +18,35 @@ class BackboneBlog.Views.PostShow extends Backbone.View
   createComment: (e) ->
     e.preventDefault()
 
-    @comments = new BackboneBlog.Routers.Comments()
-
     attributes =
       content: $('#new_comment_content').val()
+      post_id: $('#new_comment_post_id').val()
 
-    console.log attributes
-    console.log e
-    console.log 'go to comments collection and create comment model..'
+    view = new BackboneBlog.Views.CommentNew(collection: @commentCollection, comment: new BackboneBlog.Models.Comment(attributes), router: @router)
+    $('.comments-container').html view.createComment().el
+
+  # editComment: (e) ->
+  #   view = new BackboneBlog.Views.CommentEdit(collection: @commentCollection, comment: new BackboneBlog.Models.Comment(attributes), router: @router)
+  #   $('.comments-container').html view.editComment().el
+
+  destroyComment: (e) ->
+    view = new BackboneBlog.Views.Comment(collection: @commentCollection, comment: new BackboneBlog.Models.Comment(attributes), router: @router)
+    $('.comments-container').html view.destroyComment().el
+
+
+  destroyComment: (e) ->
+    e.preventDefault()
+
+    console.log @commentCollection
     debugger
+
+    # if confirm('Are you sure') == true
+    #   $('.notification-box').removeAttr('hidden')
+    #   $('.notification-box').html("'#{@commentCollection.get('title')}' has been successfully deleted!")
+    #   this.el.remove()
+    #   @model.destroy()
+    # else
+    #   # Do nothing
+    #   # console.log @model.get('title')
+    #   # console.log @model.get('id')
+    #   console.log 'You pressed Cancel!'
