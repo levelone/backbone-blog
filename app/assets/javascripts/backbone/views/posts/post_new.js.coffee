@@ -16,7 +16,7 @@ class BackboneBlog.Views.PostNew extends Backbone.View
   render: ->
     # $(@el).html(@template(post: @post))
     @setElement @template()
-    this
+    @
 
   createPost: (event) ->
     event.preventDefault()

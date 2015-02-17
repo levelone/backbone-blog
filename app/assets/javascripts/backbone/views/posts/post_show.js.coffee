@@ -1,52 +1,46 @@
 class BackboneBlog.Views.PostShow extends Backbone.View
   template: JST['posts/show']
   events:
-    'submit #new_comment' : 'createComment'
-    'click #destroy_comment' : 'destroyComment'
+    'submit #new_comment' : 'newComment'
+    # 'click .destroy_comment' : 'destroyComment'
 
   initialize: (options) ->
-    @post   = @model
-    @router = options.router
+    @collection = options.collection
+    @post       = options.model
+    @router     = options.router
+    @el         = options.el
+    @comments   = options.comments
 
-    @commentCollection = new BackboneBlog.Collections.Comments({model: BackboneBlog.Models.Post})
+    @comments.bind('refresh', this)
+    # @comments.on 'read', @reloadTable, this
+    @comments.on 'add', @appendComment, this 
+    debugger
+    # @commentCollection = new BackboneBlog.Collections.Comments({model: BackboneBlog.Models.Post})
 
   render: ->
-    @post.fetch()
-    $(@el).html(@template(post: @post))
+    $(@el).html @template(post: @post)
+    @post.fetch
+      add: true
+      sync: true
+
+    @comments.fetch
+      add: true
+      sync: true
     @
 
-  createComment: (e) ->
+  newComment: (e) ->
     e.preventDefault()
 
-    attributes =
-      content: $('#new_comment_content').val()
-      post_id: $('#new_comment_post_id').val()
+    view = new BackboneBlog.Views.CommentNew
+      collection: @comments
+      comment: new BackboneBlog.Models.Comment()
+      router: @router
 
-    view = new BackboneBlog.Views.CommentNew(collection: @commentCollection, comment: new BackboneBlog.Models.Comment(attributes), router: @router)
     $('.comments-container').html view.createComment().el
 
-  # editComment: (e) ->
-  #   view = new BackboneBlog.Views.CommentEdit(collection: @commentCollection, comment: new BackboneBlog.Models.Comment(attributes), router: @router)
-  #   $('.comments-container').html view.editComment().el
+  appendComment: (comment) ->
+    if comment.get('post_id') == @post.get('id')
+      view = new BackboneBlog.Views.Comment
+        model: comment
 
-  destroyComment: (e) ->
-    view = new BackboneBlog.Views.Comment(collection: @commentCollection, comment: new BackboneBlog.Models.Comment(attributes), router: @router)
-    $('.comments-container').html view.destroyComment().el
-
-
-  destroyComment: (e) ->
-    e.preventDefault()
-
-    console.log @commentCollection
-    debugger
-
-    # if confirm('Are you sure') == true
-    #   $('.notification-box').removeAttr('hidden')
-    #   $('.notification-box').html("'#{@commentCollection.get('title')}' has been successfully deleted!")
-    #   this.el.remove()
-    #   @model.destroy()
-    # else
-    #   # Do nothing
-    #   # console.log @model.get('title')
-    #   # console.log @model.get('id')
-    #   console.log 'You pressed Cancel!'
+      @$('#list-of-comments').append(view.render().el)

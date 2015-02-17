@@ -1,21 +1,12 @@
-<h1><%= @post.get('title') %></h1>
+<% debugger %>
 <h1><%= @post.get('id') %></h1>
 
 <ul>
   <li><%= @post.get('id') %></li>
-  <li><%= @post.get('title') %></li>
 </ul>
 
 <h3>Comments</h3>
-<ul>
-  <% for comment in @post.get('comments'): %>
-    <li>
-      <%= comment.content %>
-      <a href=''>Edit</a>
-      <a href=''>Remove</a>
-    </li>
-  <% end %>
-</ul>
+<ul id="list-of-comments"></ul>
 
 <div class="comment-container">
   <form id="new_comment">

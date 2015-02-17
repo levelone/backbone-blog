@@ -1,13 +1,15 @@
 class BackboneBlog.Views.PostsIndex extends Backbone.View
-  templates:
-    index: JST['posts/index']
+  template: JST['posts/index']
 
   events: {
     'click a.previous' : 'previous'
     'click a.next'     : 'next'
   }
 
-  initialize: ->
+  initialize: (options) ->
+    @collection = options.collection
+    @router = options.router
+
     _.bindAll this, 'previous', 'next', 'render'
     @collection.bind('refresh', this)
     @collection.on 'read', @reloadTable, this
@@ -15,10 +17,7 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
     # @pagination = new BackboneBlog.Views.Pagination
 
   render: ->
-    # @el.html BackboneBlog.templates.pagination(@collection.pageInfo())
-    # @el.html @template(@collection.pageInfo())
-    # $(@el).html(@template(@collection.pageInfo()))
-    @setElement(@templates.index())
+    @$el.html @template(posts: @collection.models)
     @collection.fetch
       add: true
       sync: true
@@ -46,24 +45,7 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
   #   @collection.fetch(add: true)
   #   @setElement(@template())
   #   this
-  #
+
   appendPost: (post) ->
     view = new BackboneBlog.Views.Post(model: post)
     @$('#posts').append(view.render().el)
-  #
-  # createPost: (event) ->
-  #   event.preventDefault()
-  #   attributes = title: $('#new_post_title').val()
-  #
-  #   @collection.create attributes,
-  #     wait: true
-  #     success: ->
-  #       $('#new_post')[0].reset()
-  #
-  #     error: @handleError
-  #
-  # handleError: (post, response) ->
-  #   if response.status == 422
-  #     errors = $.parseJSON(response.responseText).errors
-  #     for attribute, messages of errors
-  #       alert "#{attribute} #{message}" for message in messages

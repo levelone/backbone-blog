@@ -1,27 +1,28 @@
 class BackboneBlog.Views.PostEdit extends Backbone.View
-  templates:
-    edit: JST['posts/edit']
+  template: JST['posts/edit']
 
   events:
     'click input[type=submit]' : 'update'
 
   initialize: (options) ->
-    @post   = @model
-    @router = options.router
+    @collection  = options.collection
+    @model       = options.model
+    @router      = options.router
 
   render: ->
-    @setElement(@templates.edit(post: @post))
+    console.log @model
+    @$el.html @template(post: @model)
     @
 
   update: (e) ->
     e.stopPropagation()
     e.preventDefault()
 
-    # Define Attributes
-    attributes = { title: @$el.find('input[name=title]').val() }
+    attributes =
+      title: @$el.find('input[name=title]').val()
 
-    # Update Model Post in Collection
-    @post.save attributes
+    @model.save attributes
 
+    console.log @model
     # Navigate to show page
-    @router.navigate("#posts/#{@post.get('id')}", trigger: true)
+    @router.navigate("#posts/#{@model.get('id')}", trigger: true)

@@ -1,37 +1,19 @@
 class BackboneBlog.Views.CommentNew extends Backbone.View
-  # template: JST['post/show']
 
   initialize: (options) ->
+    @comments = options.collection
     @comment  = options.comment
     @router   = options.router
 
-  # render: ->
-  #   @createComment
-  #   @router.navigate "#posts/#{@comment.get('post_id')}", trigger: true
+    @comments.on 'add', @addCommentRecord, this
 
   createComment: ->
-    console.log @collection
-    console.log @comment
-    console.log @router
-    console.log '---'
+    attributes =
+      content: $('#new_comment_content').val()
+      post_id: $('#new_comment_post_id').val()
+    debugger
 
-    @collection.create(@comment.attributes, wait: true)
+    @collection.create(attributes, wait: true)
 
-    # $(@el).html(@template(post: @post))
-    # @setElement @template()
-    # this
-
-  # createPost: (event) ->
-  #   event.preventDefault()
-  #
-  #   attributes =
-  #     title: $('#new_post_title').val()
-  #     # author: $('#new_post_author').val()
-  #
-  #   # Create Model Post in Collection
-  #   @post = @collection.create(attributes, wait: true)
-  #
-  # addPostRecord: (post) ->
-  #   console.log "posts"
-  #   console.log post.id
-  #   @router.navigate "#posts/#{post.id}", trigger: true
+  addCommentRecord: (comment) ->
+    @router.navigate "#posts/#{comment.post_id}", trigger: true
