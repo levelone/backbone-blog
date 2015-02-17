@@ -1,5 +1,16 @@
+<h1><%= @post.get('title') %></h1>
+<h3>Attachments</h3>
+<ul>
+</ul>
+
 <% debugger %>
-<h1><%= @post.get('id') %></h1>
+<% if @attachments && @attachments.length: %>
+  <ul>
+    <% for attachment in @attachments: %>
+      <li><%= attachment.get('title') %></li>
+    <% end %>
+  </ul>
+<% end %>
 
 <ul>
   <li><%= @post.get('id') %></li>

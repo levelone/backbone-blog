@@ -5,11 +5,12 @@ class BackboneBlog.Views.PostShow extends Backbone.View
     # 'click .destroy_comment' : 'destroyComment'
 
   initialize: (options) ->
-    @collection = options.collection
-    @post       = options.model
-    @router     = options.router
-    @el         = options.el
-    @comments   = options.comments
+    @collection   = options.collection
+    @post         = options.model
+    @router       = options.router
+    @el           = options.el
+    @comments     = options.comments
+    @attachments  = options.attachments
 
     @comments.bind('refresh', this)
     # @comments.on 'read', @reloadTable, this
@@ -17,8 +18,10 @@ class BackboneBlog.Views.PostShow extends Backbone.View
     # @commentCollection = new BackboneBlog.Collections.Comments({model: BackboneBlog.Models.Post})
 
   render: ->
-    $(@el).html @template(post: @post)
+    $(@el).html @template(post: @post, attachments: @attachments)
     @post.fetch
+      add: true
+      sync: true
     @comments.fetch
       add: true
       sync: true
@@ -38,5 +41,12 @@ class BackboneBlog.Views.PostShow extends Backbone.View
     if comment.get('post_id') == @post.get('id')
       view = new BackboneBlog.Views.Comment
         model: comment
+
+      @$('#list-of-comments').append(view.render().el)
+
+  appendAttachment: (attachment) ->
+    if attachment.get('post_id') == @post.get('id')
+      view = new BackboneBlog.Views.Attachment
+        model: attachment
 
       @$('#list-of-comments').append(view.render().el)
