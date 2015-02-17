@@ -13,16 +13,12 @@ class BackboneBlog.Views.PostShow extends Backbone.View
 
     @comments.bind('refresh', this)
     # @comments.on 'read', @reloadTable, this
-    @comments.on 'add', @appendComment, this 
-    debugger
+    @comments.on 'add', @appendComment, this
     # @commentCollection = new BackboneBlog.Collections.Comments({model: BackboneBlog.Models.Post})
 
   render: ->
     $(@el).html @template(post: @post)
     @post.fetch
-      add: true
-      sync: true
-
     @comments.fetch
       add: true
       sync: true

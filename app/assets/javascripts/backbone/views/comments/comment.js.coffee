@@ -16,8 +16,6 @@ class BackboneBlog.Views.Comment extends Backbone.View
     if confirm('Are you sure') == true
       $('.notification-box').removeAttr('hidden')
       $('.notification-box').html("'#{@model.get('title')}' has been successfully deleted!")
-      console.log this
-      console.log this.el
       # this.el.remove()
       @model.destroy()
     else
