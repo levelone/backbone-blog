@@ -36,6 +36,7 @@ class BackboneBlog.Views.PostShow extends Backbone.View
       router: @router
 
     $('.comments-container').html view.createComment().el
+    @router.navigate("#posts/#{@post.id}")
 
   appendComment: (comment) ->
     if comment.get('post_id') == @post.get('id')

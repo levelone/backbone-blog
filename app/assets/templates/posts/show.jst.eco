@@ -1,9 +1,5 @@
 <h1><%= @post.get('title') %></h1>
-<h3>Attachments</h3>
-<ul>
-</ul>
-
-<% debugger %>
+<h2></h2>
 <% if @attachments && @attachments.length: %>
   <ul>
     <% for attachment in @attachments: %>

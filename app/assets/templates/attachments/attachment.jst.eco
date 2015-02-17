@@ -1,0 +1,4 @@
+<%= @attachment.get('id') %>.
+<%= @attachment.get('title') %>
+<a href="#comments/<%= @attachment.get('id') %>/edit">Edit</a>
+<a id='remove_comment' href='#'>Remove</a>
