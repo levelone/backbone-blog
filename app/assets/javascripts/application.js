@@ -11,11 +11,13 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require ./vendor/underscore
 //= require ./vendor/backbone
 //= require ./vendor/backbone-associations
+//= require ./vendor/jquery.fileupload.js
 //= require ./backbone/backbone_blog
 //
 //= require_tree ./vendor
