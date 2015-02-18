@@ -1,8 +1,9 @@
 <h1><%= @post.get('title') %></h1>
-<% if @attachments.length > 0 : %>
+<% if (@attachments != undefined): %>
   <ul>
     <% for attachment in @attachments: %>
-      <li><%= attachment.get('title') %></li>
+      <% console.log attachment %>
+      <li><%= attachment.get('title') if attachment.get('post_id') == @post.get('id')%></li>
     <% end %>
   </ul>
 <% end %>
@@ -22,5 +23,5 @@
   </form>
 </div>
 
-<a href=''>View All</a>
-<a href='#posts/<%= @post.get('id') %>/edit'>Edit</a>
+<a href="" id="view_posts" class="">View All</a>
+<a href="" id="edit_post" class="">Edit</a>

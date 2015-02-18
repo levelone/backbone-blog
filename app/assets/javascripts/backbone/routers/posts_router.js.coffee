@@ -13,8 +13,10 @@ class BackboneBlog.Routers.Posts extends Backbone.Router
   index: ->
     @postsIndexView = new BackboneBlog.Views.PostsIndex
       el:         $('#container')
-      collection: @posts
-      router:     @
+      collection:   @posts
+      attachments:  @attachments
+      comments:     @comments
+      router:       @
 
     @postsIndexView.render()
 
@@ -34,10 +36,12 @@ class BackboneBlog.Routers.Posts extends Backbone.Router
   edit: (id) ->
     @post = @posts.get id
     @postsEditView = new BackboneBlog.Views.PostEdit
-      el:         $('#container')
-      model:      @post
-      collection: @posts
-      router:     @
+      el:           $('#container')
+      posts:        @posts
+      model:        @post
+      attachments:  @attachments
+      comments:     @comments
+      router:       @
 
     @postsEditView.render()
 
@@ -49,10 +53,7 @@ class BackboneBlog.Routers.Posts extends Backbone.Router
     @postsShowView = new BackboneBlog.Views.PostShow
       el:           $('#container')
       model:        @post
-      collection:   @posts
-      comments:     @comments
-      attachments:  @attachments
-      router: @
+      router:       @
 
     @postsShowView.render()
 

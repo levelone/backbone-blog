@@ -6,18 +6,20 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
     'click a.next'     : 'next'
 
   initialize: (options) ->
-    @collection   = options.collection
+    @posts        = options.collection
+    @attachments  = options.attachments
+    @comments     = options.comments
     @router       = options.router
 
-    _.bindAll         this, 'previous', 'next', 'render'
-    @collection.bind  'refresh', this
-    @collection.on    'read', @reloadTable, this
-    @collection.on    'add', @appendPost, this
+    _.bindAll    this, 'previous', 'next', 'render'
+    @posts.bind  'refresh', this
+    @posts.on    'read', @reloadTable, this
+    @posts.on    'add', @appendPost, this
     # @pagination = new BackboneBlog.Views.Pagination
 
   render: ->
-    @$el.html @template(posts: @collection.models)
-    @collection.fetch
+    @$el.html @template(posts: @posts.models)
+    @posts.fetch
       add: true
       sync: true
       success: =>
@@ -29,10 +31,12 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
     e.preventDefault()
 
     router = @router
-    post   = @collection.create(new BackboneBlog.Models.Post(),{
+    post   = @posts.create(new BackboneBlog.Models.Post(),{
       wait: true
       success: (resp) ->
-        view = new BackboneBlog.Views.PostEdit(model: resp, router: router)
+        view = new BackboneBlog.Views.PostEdit
+          model: resp
+          router: router
         @$('#posts').append view.render().el
 
         router.navigate "#posts/#{resp.get('id')}/edit", trigger: true
@@ -40,11 +44,11 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
 
 
   previous: ->
-    @collection.previousPage()
+    @posts.previousPage()
     false
 
   next: ->
-    @collection.nextPage()
+    @posts.nextPage()
     false
 
   # Collection Events
@@ -54,7 +58,7 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
       # console.log post
       # debugger
 
-    view = new BackboneBlog.Views.Post(model: post)
+    view = new BackboneBlog.Views.Post(model: post, router: @router, attachments: @attachments, comments: @comments)
     @$('#posts').append(view.render().el)
 
   reloadTable: ->
