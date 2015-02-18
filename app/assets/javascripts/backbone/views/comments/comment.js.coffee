@@ -6,8 +6,7 @@ class BackboneBlog.Views.Comment extends Backbone.View
   }
 
   render: ->
-    console.log 'render!'
-    $(@el).html(@template(comment: @model))
+    @$el.html @template(comment: @model)
     @
 
   removeComment: (e) ->
