@@ -1,7 +1,7 @@
 class BackboneBlog.Routers.Posts extends Backbone.Router
   routes:
     ''                : 'index'
-    'posts/new'       : 'create'
+    'posts/new'       : 'new'
     'posts/:id/edit'  : 'edit'
     'posts/:id'       : 'show'
 
@@ -18,7 +18,7 @@ class BackboneBlog.Routers.Posts extends Backbone.Router
 
     @postsIndexView.render()
 
-  create: ->
+  new: ->
     @postsCreateView = new BackboneBlog.Views.PostNew
       el:           $('#container')
       model:        new BackboneBlog.Models.Post()

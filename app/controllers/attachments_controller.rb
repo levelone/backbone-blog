@@ -11,7 +11,14 @@ class AttachmentsController < ApplicationController
 
   def create
     puts 'creating ...... HERE'
-    respond_with Attachment.create(params[:attachment])
+    puts params
+    puts params[:title]
+    puts params[:title].original_filename
+    puts params[:title].content_type
+    respond_with Attachment.create(
+      title: params[:title].original_filename,
+      file_type: params[:title].content_type
+    )
   end
 
   def edit
@@ -19,7 +26,7 @@ class AttachmentsController < ApplicationController
   end
 
   def update
-    respond_with Attaachment.update(params[:id], params[:attachment])
+    respond_with Attaachment.update_attributes(params[:id], params[:attachment])
   end
 
   def destroy

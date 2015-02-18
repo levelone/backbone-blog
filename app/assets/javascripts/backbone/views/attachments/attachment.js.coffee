@@ -8,7 +8,7 @@ class BackboneBlog.Views.Attachment extends Backbone.View
 
   render: ->
     console.log 'render!'
-    $(@el).html @template(comment: @model)
+    $(@el).html @template(attachment: @model)
     @
 
   removeAttachment: (e) ->

@@ -3,15 +3,12 @@
     <input type="text" name="title" id="new_post_title">
     <input type="submit" value="Add">
   </form>
-  <br>
-  <form id="new_attachment" url="">
-    <input type="hidden" name="post_id" id="new_attachment_post_id"><br>
-    <input type="file" name="title" id="new_attachment_title"><br>
-    <input type="submit" value="Add">
+
+  <form id="new_attachment" action="/api/attachments" method="POST">
+    <input type="file" name="title" id="new_attachment"><br>
   </form>
 
   <div id="progress">
     <div class="bar" style="width: 0%;"></div>
   </div>
 </div>
-

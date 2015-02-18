@@ -1,8 +1,8 @@
-<div class='post-container'>
-  <div class="notification-box" hidden='hidden'></div>
+<div class="post-container">
+  <div class="notification-box" hidden="hidden"></div>
   <h1>Posts</h1>
 
-  <a href='#posts/new'>New Post</a>
+  <a href="" id="new_post">New Post</a>
 
   <ul id="posts"></ul>
 </div>

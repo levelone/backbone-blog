@@ -1,9 +1,5 @@
 class BackboneBlog.Models.Post extends Backbone.Model
+  defaults:
+    title: 'Rename me'
+    content: 'Describe me'
 
-  # url: ->
-  #   "api/posts/#{@id}"
-
-  defaults: {
-    title: 'Good Morning Backbone Blogger!'
-    # author: 'Marc'
-  }

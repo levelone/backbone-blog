@@ -1,7 +1,8 @@
 class BackboneBlog.Views.PostShow extends Backbone.View
   template: JST['posts/show']
   events:
-    'submit #new_comment' : 'newComment'
+    'submit #new_comment'     : 'newComment'
+    # 'submit #new_attachment'  : 'newAttachment'
     # 'click .destroy_comment' : 'destroyComment'
 
   initialize: (options) ->
@@ -19,6 +20,9 @@ class BackboneBlog.Views.PostShow extends Backbone.View
 
   render: ->
     $(@el).html @template(post: @post, attachments: @attachments)
+    @attachments.fetch
+      add: true
+      sync: true
     @post.fetch
       add: true
       sync: true
@@ -36,7 +40,7 @@ class BackboneBlog.Views.PostShow extends Backbone.View
       router: @router
 
     $('.comments-container').html view.createComment().el
-    @router.navigate("#posts/#{@post.id}")
+    # @router.navigate("#posts/#{@post.id}")
 
   appendComment: (comment) ->
     if comment.get('post_id') == @post.get('id')
@@ -45,9 +49,9 @@ class BackboneBlog.Views.PostShow extends Backbone.View
 
       @$('#list-of-comments').append(view.render().el)
 
-  appendAttachment: (attachment) ->
-    if attachment.get('post_id') == @post.get('id')
-      view = new BackboneBlog.Views.Attachment
-        model: attachment
-
-      @$('#list-of-comments').append(view.render().el)
+  # appendAttachment: (attachment) ->
+  #   if attachment.get('post_id') == @post.get('id')
+  #     view = new BackboneBlog.Views.Attachment
+  #       model: attachment
+  #
+  #     @$('#list-of-comments').append(view.render().el)

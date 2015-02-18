@@ -1,7 +1,24 @@
 <div class="post-container">
-  <form id="new_post" url="#posts/<%= @post.get('id') %>" method="put">
-    <input type="text" name="title" id="new_post_title" value="<%= @post.get('title') %>">
-    <input type="submit" value="Save">
-    <input type="hidden" name="id" value="<%= @post.get('id') %>">
+  <form id="edit_post">
+    <label for="title">Title: </label>
+    <input type="text" name="title" id="edit_post_title" value="<%= @post.get('title') %>"><br>
+
+    <label for="content">Content: </label>
+    <input type="text" name="content" id="edit_post_content" value="<%= @post.get('content') %>"><br>
+
+    <div id="progress">
+      <div class="bar" style="width: 0%;"></div><br>
+    </div>
+
+    <input type="submit" id="submit_post" hidden="hidden"/>
   </form>
+
+  <div class="attachment-container">
+    <form id="new_attachment" action="/api/attachments" method="POST">
+      <input type="hidden" name="post_id" id="attachment_post_id" value="<%= @post.get('id') %>">
+      <input type="file" name="title" id="attachment_title"><br>
+    </form>
+  </div>
+
+  <label for="submit_post" id="submit_edit_post" style="border:1px solid #000;">Submit</label>
 </div>
