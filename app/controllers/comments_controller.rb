@@ -4,12 +4,11 @@ class CommentsController < ApplicationController
   def index
     page      = params[:page] ||= 1
     per_page  = params[:per_page] ||= 10
-    arranged_comments = Comment.order('created_at DESC').page(page).per(per_page)
 
     comments = if params[:post_id]
-      arranged_comments.where(post_id: params[:post_id])
+      Comment.where(post_id: params[:post_id]).order('created_at DESC').page(page).per(per_page)
     else
-      arranged_comments
+      Comment.all
     end
 
     respond_with comments
