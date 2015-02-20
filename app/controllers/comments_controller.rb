@@ -2,10 +2,14 @@ class CommentsController < ApplicationController
   respond_to :json
 
   def index
+    page      = params[:page] ||= 1
+    per_page  = params[:per_page] ||= 10
+    arranged_comments = Comment.order('created_at DESC').page(page).per(per_page)
+
     comments = if params[:post_id]
-      Comment.where(post_id: params[:post_id])
+      arranged_comments.where(post_id: params[:post_id])
     else
-      Comment.all
+      arranged_comments
     end
 
     respond_with comments
