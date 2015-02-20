@@ -2,9 +2,10 @@ class BackboneBlog.Collections.Posts extends Backbone.Collection
   url: '/api/posts'
 
   initialize: ->
+    console.log 'initlaize'
     _.bindAll this, 'parse', 'pageInfo', 'nextPage', 'previousPage'
     # _.bindAll this, 'parse', 'url', 'pageInfo', 'nextPage', 'previousPage'
-    @page     = 1
+    @page = 1
     @perPage  = 10
 
   fetch: (options) ->
@@ -18,6 +19,7 @@ class BackboneBlog.Collections.Posts extends Backbone.Collection
         success self, resp
       return
 
+    console.log options
     Backbone.Collection.prototype.fetch.call(this, options)
 
   parse: (resp) ->
@@ -54,13 +56,12 @@ class BackboneBlog.Collections.Posts extends Backbone.Collection
 
     info
 
-  nextPage: ->
-    debugger
-    @page = @page + 1
-    @fetch()
+  nextPage: (page) ->
+    page += 1
+    @fetch silent: false, data: {page: page}
 
-  previousPage: ->
-    @page = @page - 1
-    @fetch()
+  previousPage: (page) ->
+    page -= 1
+    @fetch silent: false, data: {page: page}
 
   model: BackboneBlog.Models.Post
