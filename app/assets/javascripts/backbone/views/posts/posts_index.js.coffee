@@ -6,9 +6,11 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
     'click a#next_page'     : 'next'
 
   initialize: (options) ->
+    # Instantiate Collections/Model
     @posts  = new BackboneBlog.Collections.Posts()
     @router = options.router
 
+    # Event Listeners
     _.bindAll    this, 'previous', 'next', 'render'
     @posts.bind  'refresh', this
     @posts.on    'read', @reloadTable, this
@@ -21,7 +23,6 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
     @
 
   # ---------------
-  # Event Listeners
   # ---------------
   newPost: (e) ->
     e.preventDefault()
@@ -46,14 +47,13 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
     @posts.fetch(data: {page: @posts.page})
     false
 
-  # Collection Events
   appendPost: (post, options) ->
     options = options || false
 
     view = new BackboneBlog.Views.Post(model: post, router: @router)
     @$('#posts').append(view.render().el)
 
-  reloadTable: ->
+  # reloadTable: ->
     # @posts.fetch()
     # @$el.html @template(posts: @posts.models)
     # pageinatePosts = @render(@posts)
