@@ -1,9 +1,14 @@
 class BackboneBlog.Views.Comment extends Backbone.View
   template: JST['comments/comment']
-  tagName: 'li'
-  events: {
+  events:
     'click #remove_comment': 'removeComment'
-  }
+
+  # initialize: (options) ->
+  #   @comment = new BackboneBlog.Models.Comment({id: options.model.id})
+  #   @comment.on 'change', @render, this
+  #
+  # fetch: ->
+  #   @comment.fetch silent: false
 
   render: ->
     @$el.html @template(comment: @model)

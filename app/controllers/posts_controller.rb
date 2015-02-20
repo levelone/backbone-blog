@@ -6,7 +6,7 @@ class PostsController < ApplicationController
     per_page  = params[:per_page] ||= 10
     posts     = Post.order('created_at DESC').page(page).per(per_page)
 
-    render :json => {
+    render json: {
       page: page,
       per_page: per_page,
       total_pages: posts.total_pages,

@@ -3,45 +3,39 @@ class BackboneBlog.Views.PostShow extends Backbone.View
   events:
     'submit #new_comment' : 'newComment'
     'click #edit_post'    : 'editPost'
-    # 'click .destroy_comment' : 'destroyComment'
+    'click #view_posts'   : 'viewPosts'
 
   initialize: (options) ->
-    # @posts        = options.collection
-    @post         = options.model
+    # Instantiate Collections/Models
+    @post         = new BackboneBlog.Models.Post({id: options.id})
+    @attachments  = new BackboneBlog.Collections.Attachments({post_id: options.id})
+    @comments     = new BackboneBlog.Collections.Comments({post_id: options.id})
     @router       = options.router
-    @attachments  = options.attachments
-    @comments     = options.comments
 
-    @comments.bind 'refresh', this 
-    # @comments.on 'read', @reloadTable, this
-    @comments.on 'add', @appendComment, this
-    # @commentCollection = new BackboneBlog.Collections.Comments({model: BackboneBlog.Models.Post})
+    # Event Listeners
+    @post.on        'change', @render, this
+    @comments.bind  'refresh', this
+    @comments.on    'add', @appendComment, this
+    @comments.on    'change', @appendComment, this
+
+  fetch: ->
+    @post.fetch         silent: false
+    @comments.fetch     add: true, data: {post_id: @post.id}
+    @attachments.fetch  add: true, data: {post_id: @post.id}
 
   render: ->
-    # @$el.html @template(post: @post)
-    @$el.html @template
-      post: @post
-      attachments: @attachments
-      comments: @comments
-
-    # @post.fetch         add: true, sync: true
-    # @attachments.fetch  add: true, sync: true if @attachments != undefined
-    @comments.fetch     add: true, sync: true if @comments != undefined
+    @$el.html @template {post: @post}
     @
 
   appendComment: (comment) ->
-    if comment.get('post_id') == @post.get('id')
-      view = new BackboneBlog.Views.Comment
-        model: comment
+    commentView = new BackboneBlog.Views.Comment(model: comment)
+    @$('#list-of-comments').append commentView.el
+    commentView.render()
 
-      @$('#list-of-comments').append view.render().el
-
-  # Event Listeners
   newComment: (e) ->
     e.preventDefault()
-
     view = new BackboneBlog.Views.CommentNew
-      collection: @comments
+      comments: @comments
       comment: new BackboneBlog.Models.Comment()
       router: @router
 
@@ -49,11 +43,8 @@ class BackboneBlog.Views.PostShow extends Backbone.View
 
   editPost: (e) ->
     e.preventDefault()
+    @router.navigate "#posts/#{@post.id}/edit", trigger: true
 
-    view = new BackboneBlog.Views.PostEdit
-      model: @post
-      router: @router
-
-    @$('#posts').append view.render().el
-
-    @router.navigate "#posts/#{@post.get('id')}/edit", trigger: true
+  viewPosts: (e) ->
+    e.preventDefault()
+    @router.navigate "#", trigger: true

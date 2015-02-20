@@ -1,6 +1,8 @@
-<%= @post.get('id') %>.
-<%= @post.get('title') %>
+<li>
+  <%= @post.get('id') %>.
+  <%= @post.get('title') %>
 
-<a href="" id="view_post" class="">View</a>
-<a href="" id="edit_post" class="">Edit</a>
-<a href="" id="remove_post" class="">Remove</a>
+  <a href="" id="view_post" class="">View</a>
+  <a href="" id="edit_post" class="">Edit</a>
+  <a href="" id="remove_post" class="">Remove</a>
+</li>

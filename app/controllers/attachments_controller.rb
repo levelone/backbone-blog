@@ -10,14 +10,10 @@ class AttachmentsController < ApplicationController
   end
 
   def create
-    puts 'creating ...... HERE'
-    puts params
-    puts params[:title]
-    puts params[:title].original_filename
-    puts params[:title].content_type
     respond_with Attachment.create(
-      title: params[:title].original_filename,
-      file_type: params[:title].content_type
+      post_id:    params[:post_id],
+      title:      params[:title].original_filename,
+      file_type:  params[:title].content_type
     )
   end
 

@@ -10,9 +10,9 @@ class BackboneBlog.Views.CommentShow extends Backbone.View
 
     # destroyComment(e)
 
-  # render: ->
-    #@createComment
-    #@router.navigate "#posts/#{@comment.get('post_id')}", trigger: true
+  render: ->
+    @createComment
+    @router.navigate "#posts/#{@comment.get('post_id')}", trigger: true
 
   destroyComment: ->
     console.log @event

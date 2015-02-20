@@ -1,21 +1,23 @@
 class BackboneBlog.Views.PostEdit extends Backbone.View
   template: JST['posts/edit']
-
   events:
     'click input[type=submit]' : 'updatePost'
     'click #new_attachment'    : 'openJqueryFileUploader'
 
   initialize: (options) ->
-    console.log options
-    @posts        = options.collection
-    @post         = options.model
+    # Instantiate Collections/Models
+    @post         = new BackboneBlog.Models.Post({id: options.id})
+    @attachments  = new BackboneBlog.Collections.Attachments()
     @router       = options.router
-    @el           = options.el
-    @attachments  = options.attachments
-    @comments     = options.comments
+
+    # Event Listeners
+    @post.on 'change', @render, this
+
+  fetch: ->
+    @post.fetch silent: false
 
   render: ->
-    @$el.html @template(post: @post)
+    @$el.html @template {post: @post}
     @
 
   # Event Listeners
@@ -23,23 +25,13 @@ class BackboneBlog.Views.PostEdit extends Backbone.View
     e.stopPropagation()
     e.preventDefault()
 
-    attributes =
-      title:    @$el.find('input[name=title]').val()
-      content:  @$el.find('input[name=content]').val()
+    @post.set
+      title: @$el.find('input[name=title]').val()
+      content: @$el.find('input[name=content]').val()
 
-    @post.save attributes
-
-    # view = new BackboneBlog.Views.PostShow
-    #   collection:   @posts
-    #   model:        @post
-    #   router:       @router
-    #   el:           @el
-    #   attachments:  @attachments
-    #   comments:     @comments
-    #
-    # @$('#posts').append view.render().el
+    @post.save wait: true
     @router.navigate "#posts/#{@post.get('id')}", trigger: true
 
   openJqueryFileUploader: (e) ->
-    $('#new_attachment').fileupload()
+    $('#new_attachment').fileupload({post_id: @post.get('id')})
     console.log '--jqueryfileuploader'

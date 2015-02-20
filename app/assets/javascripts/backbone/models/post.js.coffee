@@ -3,3 +3,5 @@ class BackboneBlog.Models.Post extends Backbone.Model
     title: 'Rename me'
     content: 'Describe me'
 
+  url: ->
+    "/api/posts/#{@id}"

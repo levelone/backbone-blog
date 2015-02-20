@@ -1,5 +1,7 @@
-<%= @comment.get('id') %>.
-<%= @comment.get('content') %>
+<li>
+  <%= @comment.get('id') %>.
+  <%= @comment.get('content') %>
 
-<a href="" id="edit_comment">Edit</a>
-<a href="" id="remove_comment" >Remove</a>
+  <a href="" id="edit_comment">Edit</a>
+  <a href="" id="remove_comment" >Remove</a>
+</li>

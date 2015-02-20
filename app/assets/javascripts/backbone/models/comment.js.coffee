@@ -1,4 +1,3 @@
 class BackboneBlog.Models.Comment extends Backbone.Model
-  # defaults: {
-  #   # idAttribute: '_id'
-  # }
+  # url: ->
+  #   "/api/comments/#{@id}"

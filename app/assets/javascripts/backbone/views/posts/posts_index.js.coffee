@@ -1,67 +1,64 @@
 class BackboneBlog.Views.PostsIndex extends Backbone.View
   template: JST['posts/index']
   events:
-    'click a#new_post' : 'newPost'
-    'click a.previous' : 'previous'
-    'click a.next'     : 'next'
+    'click a#new_post'      : 'newPost'
+    'click a#previous_page' : 'previous'
+    'click a#next_page'     : 'next'
 
   initialize: (options) ->
-    @posts        = options.collection
-    @attachments  = options.attachments
-    @comments     = options.comments
-    @router       = options.router
+    @posts  = new BackboneBlog.Collections.Posts()
+    @router = options.router
 
     _.bindAll    this, 'previous', 'next', 'render'
     @posts.bind  'refresh', this
     @posts.on    'read', @reloadTable, this
     @posts.on    'add', @appendPost, this
-    # @pagination = new BackboneBlog.Views.Pagination
+    # # @pagination = new BackboneBlog.Views.Pagination
 
   render: ->
-    @$el.html @template(posts: @posts.models)
-    @posts.fetch
-      add: true
-      sync: true
-      success: =>
-        @reloadTable()
+    @setElement @template(post: @posts.models)
+    @posts.fetch add: true, sync: true
     @
 
+  # ---------------
   # Event Listeners
+  # ---------------
   newPost: (e) ->
     e.preventDefault()
+    debugger
 
     router = @router
-    post   = @posts.create(new BackboneBlog.Models.Post(),{
+    post   = @posts.create new BackboneBlog.Models.Post(),
       wait: true
       success: (resp) ->
-        view = new BackboneBlog.Views.PostEdit
-          model: resp
-          router: router
+        view = new BackboneBlog.Views.PostEdit({ model: resp, router: router})
         @$('#posts').append view.render().el
 
         router.navigate "#posts/#{resp.get('id')}/edit", trigger: true
-    })
-
 
   previous: ->
     @posts.previousPage()
     false
 
   next: ->
-    @posts.nextPage()
+    @posts.reset()
+    @posts.page
+    @posts.fetch(data: {page: @posts.page})
     false
 
   # Collection Events
   appendPost: (post, options) ->
     options = options || false
-    # if options == true
-      # console.log post
-      # debugger
 
-    view = new BackboneBlog.Views.Post(model: post, router: @router, attachments: @attachments, comments: @comments)
+    view = new BackboneBlog.Views.Post(model: post, router: @router)
     @$('#posts').append(view.render().el)
 
   reloadTable: ->
+    # @posts.fetch()
+    # @$el.html @template(posts: @posts.models)
+    # pageinatePosts = @render(@posts)
+    # paginateHtml = @pagination.render(@posts).$el
+    # @$('#posts').html paginateHtml
+
     # paginationHtml = @pagination.render(@collection).$el
     # @$('.pagination-container').html(paginationHtml)
-    # # debugger

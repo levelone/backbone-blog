@@ -55,6 +55,7 @@ class BackboneBlog.Collections.Posts extends Backbone.Collection
     info
 
   nextPage: ->
+    debugger
     @page = @page + 1
     @fetch()
 
