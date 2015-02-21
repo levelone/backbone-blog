@@ -2,7 +2,7 @@ class BackboneBlog.Collections.Comments extends Backbone.Collection
   url: '/api/comments'
 
   initialize: ->
-    _.bindAll this, 'nextPage', 'previousPage'
+    _.bindAll this, 'parse', 'pageInfo', 'nextComments', 'previousComments'
     @page = 1
     @perPage  = 10
 
@@ -19,42 +19,42 @@ class BackboneBlog.Collections.Comments extends Backbone.Collection
 
     Backbone.Collection.prototype.fetch.call(this, options)
 
-  # parse: (resp) ->
-  #   @page = resp.page
-  #   @perPage = resp.per_page
-  #   @totalPages = resp.total_pages
-  #   resp.models
-  #
-  # pageInfo: ->
-  #   info =
-  #     totalPages: @totalPages
-  #     page: @page
-  #     perPage: @perPage
-  #     pages: Math.ceil(@total / @perPage)
-  #     prev: false
-  #     next: false
-  #
-  #   max = Math.min(@total, @page * @perPage)
-  #
-  #   if (@total == @pages * @perPage)
-  #     max = @total
-  #
-  #   info.range = [(@page - 1) * @perPage + 1, max]
-  #
-  #   if (@page > 1)
-  #     @prev = @page - 1
-  #
-  #   if (@page < info.pages)
-  #     info.next = @page + 1
-  #
-  #   info
+  parse: (resp) ->
+    @page = resp.page
+    @perPage = resp.per_page
+    @totalPages = resp.total_pages
+    resp.models
 
-  nextPage: (page) ->
+  pageInfo: ->
+    info =
+      totalPages: @totalPages
+      page: @page
+      perPage: @perPage
+      pages: Math.ceil(@total / @perPage)
+      prev: false
+      next: false
+
+    max = Math.min(@total, @page * @perPage)
+
+    if (@total == @pages * @perPage)
+      max = @total
+
+    info.range = [(@page - 1) * @perPage + 1, max]
+
+    if (@page > 1)
+      @prev = @page - 1
+
+    if (@page < info.pages)
+      info.next = @page + 1
+
+    info
+
+  nextComments: (page, post_id) ->
     page += 1
-    @fetch silent: false, data: {page: page}
+    @fetch silent: false, data: {page: page, post_id: post_id}
 
-  previousPage: (page) ->
+  previousComments: (page, post_id) ->
     page -= 1
-    @fetch silent: false, data: {page: page}
+    @fetch silent: false, data: {page: page, post_id: post_id}
 
   model: BackboneBlog.Models.Comment

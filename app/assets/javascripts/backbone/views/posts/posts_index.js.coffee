@@ -40,6 +40,7 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
     if @posts.totalPages > currentPage
       @posts.nextPage(currentPage) 
       @$('#posts').html ''
+      debugger
     false
 
   previous: ->

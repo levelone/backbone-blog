@@ -1,13 +1,11 @@
 class BackboneBlog.Views.PostShow extends Backbone.View
   template: JST['posts/show']
   events:
-    # Post
     'submit #new_comment'             : 'newComment'
     'click #edit_post'                : 'editPost'
     'click #view_posts'               : 'viewPosts'
-    # Comments
-    'click a#previous_comments_page'  : 'previous'
-    'click a#next_comments_page'      : 'next'
+    'click a#previous_comments_page'  : 'previousComments'
+    'click a#next_comments_page'      : 'nextComments'
 
   initialize: (options) ->
     # Instantiate Collections/Models
@@ -17,9 +15,8 @@ class BackboneBlog.Views.PostShow extends Backbone.View
     @router       = options.router
 
     # Event Listeners
-    _.bindAll       this, 'previous', 'next', 'fetch'
+    _.bindAll       this, 'previousComments', 'nextComments', 'fetch'
     @post.on        'change', @render, this
-    # @comments.bind  'refresh', this
     @comments.on    'add', @appendComment, this
     @comments.on    'change', @appendComment, this
 
@@ -32,36 +29,38 @@ class BackboneBlog.Views.PostShow extends Backbone.View
         @attachments.fetch  add: true, data: {post_id: resp.id}
         @comments.fetch     add: true, data: {post_id: resp.id}
 
-    # @attachments.fetch  add: true, data: {post_id: resp.id}
-    # @comments.fetch     add: true, data: {post_id: resp.id}
-
-
   render: ->
     @$el.html @template {post: @post}
     @
 
   appendComment: (comment) ->
-    # debugger
     commentView = new BackboneBlog.Views.Comment(model: comment)
     commentView.render()
     @$('#list-of-comments').append commentView.el
 
-  next: ->
-    currentPage = parseInt(@posts.page)
-    if @posts.totalPages > currentPage
-      @posts.nextPage(currentPage) 
-      @$('#posts').html ''
+  nextComments: ->
+    post_id       = @comments.models[0].get('post_id')
+    current_page  = parseInt(@comments.page)
+
+    if @comments.totalPages > current_page 
+      @comments.nextComments(current_page, post_id)
+      @$("#list-of-comments").html ""
+    # else
+    #   @$("#next_comments_page")
     false
 
-  previous: ->
-    currentPage = parseInt(@posts.page)
-    if currentPage > 1
-      @posts.previousPage(currentPage)
-      @$('#posts').html ''
+  previousComments: ->
+    post_id       = @comments.models[0].get('post_id')
+    current_page  = parseInt(@comments.page)
+
+    if current_page > 1
+      @comments.previousComments(current_page, post_id)
+      @$('#list-of-comments').html ''
     false
 
   newComment: (e) ->
     e.preventDefault()
+
     view = new BackboneBlog.Views.CommentNew
       comments: @comments
       comment: new BackboneBlog.Models.Comment()
@@ -76,10 +75,3 @@ class BackboneBlog.Views.PostShow extends Backbone.View
   viewPosts: (e) ->
     e.preventDefault()
     @router.navigate "#", trigger: true
-
-  # reloadCommentsTable: ->
-  #   @$('#list-of-comments').remove()
-  #   @$('#list-of-comments').children.remove()
-  #   $('#list-of-comments').remove()
-  #   $('#list-of-comments').children().remove()
-

@@ -11,7 +11,12 @@ class CommentsController < ApplicationController
       Comment.all
     end
 
-    respond_with comments
+    render json: {
+      page: page,
+      per_page: per_page,
+      total_pages: comments.total_pages,
+      models: comments
+    }
   end
 
   def show

@@ -6,6 +6,6 @@
 
   <ul id="posts"></ul>
 
-  <a href="" id="next_page">Next Page</a><br>
-  <a href="" id="previous_page">Previous Page</a>
+  <a href="" id="previous_page"><<</a> |
+  <a href="" id="next_page">>></a>
 </div>
