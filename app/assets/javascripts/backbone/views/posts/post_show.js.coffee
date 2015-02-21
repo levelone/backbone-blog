@@ -1,11 +1,11 @@
 class BackboneBlog.Views.PostShow extends Backbone.View
   template: JST['posts/show']
   events:
-    'submit #new_comment'             : 'newComment'
-    'click #edit_post'                : 'editPost'
-    'click #view_posts'               : 'viewPosts'
-    'click a#previous_comments_page'  : 'previousComments'
-    'click a#next_comments_page'      : 'nextComments'
+    'submit #new_comment'           : 'newComment'
+    'click #edit_post'              : 'editPost'
+    'click #view_posts'             : 'viewPosts'
+    'click #previous_comments_page' : 'previousComments'
+    'click #next_comments_page'     : 'nextComments'
 
   initialize: (options) ->
     # Instantiate Collections/Models
@@ -34,6 +34,19 @@ class BackboneBlog.Views.PostShow extends Backbone.View
     @
 
   appendComment: (comment) ->
+    comments_page = parseInt(@comments.page)
+
+    # Temporarily here.. Encapuslate out
+    if comments_page == 1 && @comments.totalPages > 1
+      $('#next_comments_page').removeAttr('disabled')
+      $('#previous_comments_page').attr('disabled', 'disabled')
+    else if comments_page == @comments.totalPages
+      $('#next_comments_page').attr('disabled', 'disabled')
+      $('#previous_comments_page').removeAttr('disabled')
+    else
+      $('#next_comments_page').removeAttr('disabled')
+      $('#previous_comments_page').removeAttr('disabled')
+
     commentView = new BackboneBlog.Views.Comment(model: comment)
     commentView.render()
     @$('#list-of-comments').append commentView.el
@@ -42,11 +55,9 @@ class BackboneBlog.Views.PostShow extends Backbone.View
     post_id       = @comments.models[0].get('post_id')
     current_page  = parseInt(@comments.page)
 
-    if @comments.totalPages > current_page 
+    if @comments.totalPages > current_page
       @comments.nextComments(current_page, post_id)
       @$("#list-of-comments").html ""
-    # else
-    #   @$("#next_comments_page")
     false
 
   previousComments: ->

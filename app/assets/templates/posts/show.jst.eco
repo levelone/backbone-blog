@@ -16,8 +16,8 @@
   <h3>Comments</h3>
   <ul id="list-of-comments"></ul>
 
-  <a href="" id="previous_comments_page"><<</a> |
-  <a href="" id="next_comments_page">>></a>
+  <button id="previous_comments_page" disabled="disabled"><<</button> |
+  <button id="next_comments_page" disabled="disabled">>></button>
 
   <div class="comment-container">
     <form id="new_comment">

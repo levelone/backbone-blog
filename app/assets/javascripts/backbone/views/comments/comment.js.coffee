@@ -4,6 +4,11 @@ class BackboneBlog.Views.Comment extends Backbone.View
     'click #remove_comment': 'removeComment'
 
   render: ->
+    comments = @model.collection
+    if comments.totalPages <= 1
+      $('#next_comments_page').attr('disabled', 'disabled')
+      $('#previous_comments_page').attr('disabled', 'disabled')
+
     @$el.html @template(comment: @model)
     @
 
