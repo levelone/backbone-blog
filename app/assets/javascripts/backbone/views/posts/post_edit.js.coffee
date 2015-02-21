@@ -29,7 +29,7 @@ class BackboneBlog.Views.PostEdit extends Backbone.View
       title: @$el.find('input[name=title]').val()
       content: @$el.find('input[name=content]').val()
 
-    @post.save wait: true
+    @post.save(@post, {patch: true})
     @router.navigate "#posts/#{@post.get('id')}", trigger: true
 
   openJqueryFileUploader: (e) ->

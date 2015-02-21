@@ -16,6 +16,9 @@
   <h3>Comments</h3>
   <ul id="list-of-comments"></ul>
 
+  <a href="" id="next_comments_page">Next</a>
+  <a href="" id="previous_comments_page">Previous</a>
+
   <div class="comment-container">
     <form id="new_comment">
       <input type="hidden" name="post_id" id="new_comment_post_id" value="<%= @post.get('id') %>">

@@ -2,7 +2,6 @@ class BackboneBlog.Collections.Posts extends Backbone.Collection
   url: '/api/posts'
 
   initialize: ->
-    console.log 'initlaize'
     _.bindAll this, 'parse', 'pageInfo', 'nextPage', 'previousPage'
     # _.bindAll this, 'parse', 'url', 'pageInfo', 'nextPage', 'previousPage'
     @page = 1
