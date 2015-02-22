@@ -1,18 +1,23 @@
 class BackboneBlog.Views.Comment extends Backbone.View
   template: JST['comments/comment']
+  tagName: 'li'
+
   events:
     'click #remove_comment': 'removeComment'
 
-  initialize: ->
-    @model.on 'remove', @reloadCommentList, this
+  initialize: (options) ->
+    @comment  = options.model
+    @router   = options.router
+
+    @comment.on 'remove', @reloadCommentList, this
 
   render: ->
-    comments = @model.collection
+    comments = @comment.collection
     if comments.totalPages <= 1
       $('#next_comments_page').attr('disabled', 'disabled')
       $('#previous_comments_page').attr('disabled', 'disabled')
 
-    @$el.html @template(comment: @model)
+    @$el.html @template(comment: @comment)
     @
 
   removeComment: (e) ->
@@ -20,12 +25,11 @@ class BackboneBlog.Views.Comment extends Backbone.View
 
     if confirm('Are you sure') == true
       $('.notification-box').removeAttr('hidden')
-      $('.notification-box').html("'#{@model.get('title')}' has been successfully deleted!")
-      # @el.remove()
-      $("#list-of-comments").html ""
-      @model.destroy()
+      $('.notification-box').html("'#{@comment.get('title')}' has been successfully deleted!")
+      @el.remove()
+      @comment.destroy()
     else
       console.log 'You pressed Cancel!'
 
   reloadCommentList: ->
-    location.reload true
+    @router.navigate "#posts/#{@comment.get('post_id')}", trigger: true

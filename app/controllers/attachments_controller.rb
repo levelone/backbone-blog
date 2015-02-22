@@ -2,7 +2,13 @@ class AttachmentsController < ApplicationController
   respond_to :json
 
   def index
-    respond_with Attachment.all
+    attachments = if params[:post_id]
+      Attachment.where(post_id: params[:post_id])
+    else
+      Attachment.all
+    end
+
+    respond_with attachments
   end
 
   def show

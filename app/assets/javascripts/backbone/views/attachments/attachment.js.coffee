@@ -2,26 +2,26 @@ class BackboneBlog.Views.Attachment extends Backbone.View
   template: JST['attachments/attachment']
   tagName: 'li'
 
-  events: {
+  events:
     'click #remove_attachment': 'removeAttachment'
-  }
+
+  initialize: (options) ->
+    @attachment = options.model
+    @router     = options.router
+
+    @attachment.on 'remove', @reloadAttachmentList, this
 
   render: ->
-    console.log 'render!'
-    $(@el).html @template(attachment: @model)
+    @$el.html @template(attachment: @attachment)
     @
 
   removeAttachment: (e) ->
     e.preventDefault()
-    debugger
 
-    # if confirm('Are you sure') == true
-    #   $('.notification-box').removeAttr('hidden')
-    #   $('.notification-box').html("'#{@model.get('title')}' has been successfully deleted!")
-    #   # this.el.remove()
-    #   @model.destroy()
-    # else
-    #   # Do nothing
-    #   # console.log @model.get('title')
-    #   # console.log @model.get('id')
-    #   console.log 'You pressed Cancel!'
+    if confirm('Are you sure?') == true
+      $('.notification-box').removeAttr('hidden')
+      $('.notification-box').html("'#{@attachment.get('title')}' has been successfully deleted!")
+      @el.remove()
+      @attachment.destroy()
+    else
+      console.log 'You pressed Cancel!'

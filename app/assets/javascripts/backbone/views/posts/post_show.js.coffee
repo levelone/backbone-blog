@@ -17,6 +17,7 @@ class BackboneBlog.Views.PostShow extends Backbone.View
 
     _.bindAll       this, 'previousComments', 'nextComments', 'fetch'
     @post.on        'change', @render, this
+    @attachments.on 'add', @appendAttachment, this
     @comments.on    'add', @appendComment, this
     @comments.on    'change', @prependComment, this
 
@@ -54,7 +55,7 @@ class BackboneBlog.Views.PostShow extends Backbone.View
       next.removeAttr('disabled')
       previous.removeAttr('disabled')
 
-    commentView = new BackboneBlog.Views.Comment(model: comment)
+    commentView = new BackboneBlog.Views.Comment(model: comment, router: @router)
     commentView.render()
 
     # Prepend if comment is new
@@ -62,6 +63,12 @@ class BackboneBlog.Views.PostShow extends Backbone.View
       @$('#list-of-comments').prepend commentView.el
     else
       @$('#list-of-comments').append commentView.el
+
+  appendAttachment: (attachment) ->
+    attachmentView = new BackboneBlog.Views.Attachment(model: attachment)
+    attachmentView.render()
+
+    @$('#list-of-attachments').append attachmentView.el
 
   nextComments: ->
     post_id       = @comments.models[0].get('post_id')
