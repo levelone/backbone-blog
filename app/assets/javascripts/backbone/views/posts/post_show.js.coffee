@@ -7,19 +7,20 @@ class BackboneBlog.Views.PostShow extends Backbone.View
     'click #previous_comments_page' : 'previousComments'
     'click #next_comments_page'     : 'nextComments'
 
+  # Instantiate Collections/Models
+  # Event Listeners
   initialize: (options) ->
-    # Instantiate Collections/Models
     @post         = new BackboneBlog.Models.Post({id: options.id})
     @attachments  = new BackboneBlog.Collections.Attachments({post_id: options.id})
     @comments     = new BackboneBlog.Collections.Comments({post_id: options.id})
     @router       = options.router
 
-    # Event Listeners
     _.bindAll       this, 'previousComments', 'nextComments', 'fetch'
     @post.on        'change', @render, this
     @comments.on    'add', @appendComment, this
-    @comments.on    'change', @appendComment, this
+    @comments.on    'change', @prependComment, this
 
+  # Clear Comments to fetch updated state
   fetch: ->
     @$('#list-of-comments').html ''
     @post.fetch
@@ -29,27 +30,38 @@ class BackboneBlog.Views.PostShow extends Backbone.View
         @attachments.fetch  add: true, data: {post_id: resp.id}
         @comments.fetch     add: true, data: {post_id: resp.id}
 
+  # Render skeleton html page
   render: ->
     @$el.html @template {post: @post}
     @
 
-  appendComment: (comment) ->
-    comments_page = parseInt(@comments.page)
+  # Append comments with descending order
+  # Through comments controller
+  appendComment: (comment, collection, options) ->
+    current_page  = parseInt(@comments.page)
+    next          = $('#next_comments_page')
+    previous      = $('#previous_comments_page')
 
-    # Temporarily here.. Encapuslate out
-    if comments_page == 1 && @comments.totalPages > 1
-      $('#next_comments_page').removeAttr('disabled')
-      $('#previous_comments_page').attr('disabled', 'disabled')
-    else if comments_page == @comments.totalPages
-      $('#next_comments_page').attr('disabled', 'disabled')
-      $('#previous_comments_page').removeAttr('disabled')
+    # Check pages if last or first page..
+    # Try to encapsulate this code
+    if current_page == 1 && @comments.totalPages > 1
+      next.removeAttr('disabled')
+      previous.attr('disabled', 'disabled')
+    else if current_page == @comments.totalPages
+      next.attr('disabled', 'disabled')
+      previous.removeAttr('disabled')
     else
-      $('#next_comments_page').removeAttr('disabled')
-      $('#previous_comments_page').removeAttr('disabled')
+      next.removeAttr('disabled')
+      previous.removeAttr('disabled')
 
     commentView = new BackboneBlog.Views.Comment(model: comment)
     commentView.render()
-    @$('#list-of-comments').append commentView.el
+
+    # Prepend if comment is new
+    if options.new_comment == true
+      @$('#list-of-comments').prepend commentView.el
+    else
+      @$('#list-of-comments').append commentView.el
 
   nextComments: ->
     post_id       = @comments.models[0].get('post_id')
@@ -72,12 +84,8 @@ class BackboneBlog.Views.PostShow extends Backbone.View
   newComment: (e) ->
     e.preventDefault()
 
-    view = new BackboneBlog.Views.CommentNew
-      comments: @comments
-      comment: new BackboneBlog.Models.Comment()
-      router: @router
-
-    $('.comments-container').html view.createComment()
+    view = new BackboneBlog.Views.CommentNew(comments: @comments, comment: new BackboneBlog.Models.Comment(), router: @router)
+    $('#list-of-comments').prepend view.createComment()
 
   editPost: (e) ->
     e.preventDefault()

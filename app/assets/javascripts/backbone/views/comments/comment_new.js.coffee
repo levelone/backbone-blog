@@ -13,7 +13,8 @@ class BackboneBlog.Views.CommentNew extends Backbone.View
       post_id: $('#new_comment_post_id').val()
 
     @comment.save
-    @comments.create(@comment, wait: true) if @comments != undefined
+    @comments.create(@comment, wait: true, new_comment: true) if @comments != undefined
+    debugger
 
     @router.navigate "#posts/#{@comment.get('post_id')}", trigger: true
 

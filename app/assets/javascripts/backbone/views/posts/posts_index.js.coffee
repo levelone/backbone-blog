@@ -58,13 +58,4 @@ class BackboneBlog.Views.PostsIndex extends Backbone.View
 
   reloadTable: ->
     @$('#posts').remove()
-    debugger
     @render
-    # @posts.fetch()
-    # @$el.html @template(posts: @posts.models)
-    # pageinatePosts = @render(@posts)
-    # paginateHtml = @pagination.render(@posts).$el
-    # @$('#posts').html paginateHtml
-
-    # paginationHtml = @pagination.render(@collection).$el
-    # @$('.pagination-container').html(paginationHtml)

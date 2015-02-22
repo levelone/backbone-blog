@@ -3,6 +3,9 @@ class BackboneBlog.Views.Comment extends Backbone.View
   events:
     'click #remove_comment': 'removeComment'
 
+  initialize: ->
+    @model.on 'remove', @reloadCommentList, this
+
   render: ->
     comments = @model.collection
     if comments.totalPages <= 1
@@ -18,10 +21,11 @@ class BackboneBlog.Views.Comment extends Backbone.View
     if confirm('Are you sure') == true
       $('.notification-box').removeAttr('hidden')
       $('.notification-box').html("'#{@model.get('title')}' has been successfully deleted!")
-      # this.el.remove()
+      # @el.remove()
+      $("#list-of-comments").html ""
       @model.destroy()
     else
-      # Do nothing
-      # console.log @model.get('title')
-      # console.log @model.get('id')
       console.log 'You pressed Cancel!'
+
+  reloadCommentList: ->
+    location.reload true
