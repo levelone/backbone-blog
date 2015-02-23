@@ -16,4 +16,5 @@
 
 # Notes
 scrap.rb
-/public/posts/*
+/public/uploads/tmp/*
+/public/uploads/posts/*
