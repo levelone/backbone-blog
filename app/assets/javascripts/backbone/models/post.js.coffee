@@ -1,7 +1,12 @@
 class BackboneBlog.Models.Post extends Backbone.Model
   defaults:
-    title: 'Rename me'
-    content: 'Describe me'
+    title:    'Rename me'
+    content:  'Describe me'
+    permalink:  ''
 
   url: ->
-    "/api/posts/#{@id}"
+    base = "/api/posts"
+    if @isNew()
+      base
+    else
+      "#{base}/#{@id}"

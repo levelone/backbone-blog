@@ -13,12 +13,16 @@ class Post < ActiveRecord::Base
   accepts_nested_attributes_for :attachments, allow_destroy: true
   accepts_nested_attributes_for :tags
 
-  before_create :truncate_teaser
+  before_save :truncate_teaser
 
   private
 
   def truncate_teaser
-    # self.teaser = self.teaser.split[0..50].join(' ')  # truncate by words
-    self.teaser = self.teaser.truncate(50)              # truncate by letters
+    # self.teaser = self.teaser.split[0..49].join(' ')  # truncate by words
+    self.teaser = if self.content.length > 50
+      "#{self.content[0...50]}..."
+    else
+      self.content
+    end
   end
 end
