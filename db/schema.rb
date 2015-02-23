@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20150205020737) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "post_id"
+    t.string   "image"
   end
 
   create_table "authors", :force => true do |t|

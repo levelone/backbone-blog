@@ -14,10 +14,14 @@
   </form>
 
   <div class="attachment-container">
-    <form id="new_attachment" action="/api/attachments" method="POST">
+    <form id="new_attachment" action="/api/attachments" method="post">
       <input type="hidden" name="post_id" id="attachment_post_id" value="<%= @post.get('id') %>">
-      <input type="file" name="title" id="attachment_title"><br>
+      <input type="file" name="attachment[image]" id="attachment_image"><br>
     </form>
+  </div>
+
+  <div id="progress">
+    <div class="bar" style="width: 0%; height: 18px; background: green;"></div>
   </div>
 
   <label for="submit_post" id="submit_edit_post" style="border:1px solid #000;">Submit</label>

@@ -1,8 +1,8 @@
 class BackboneBlog.Views.PostEdit extends Backbone.View
   template: JST['posts/edit']
   events:
-    'click input[type=submit]' : 'updatePost'
-    'click #new_attachment'    : 'openJqueryFileUploader'
+    'click input[type=submit]'  : 'updatePost'
+    'click #attachment_image'         : 'openJqueryFileUploader'
 
   initialize: (options) ->
     # Instantiate Collections/Models
@@ -33,5 +33,26 @@ class BackboneBlog.Views.PostEdit extends Backbone.View
     @router.navigate "#posts/#{@post.get('id')}", trigger: true
 
   openJqueryFileUploader: (e) ->
-    $('#new_attachment').fileupload({post_id: @post.get('id')})
+    # $('#new_attachment').fileupload('disable')
+    $('#attachment_image').fileupload
+      sequentialUploads: true
+      post_id: @post.get('id')
+      progressall: (e, data) ->
+        progress = parseInt(data.loaded / data.total * 100, 10)
+        $('#progress .bar').css 'width', progress + '%'
+
+      # drop: (e, data) ->
+      #   $.each data.files, (index, file) ->
+      #     alert('Dropped file: ' + file.name)
+      #
+      # change: (e, data) ->
+      #   $.each data.files, (index, file) ->
+      #     alert('Selected file: ' + file.name)
+
+        progress_data = $('#attachment_image').fileupload('progress')
+        active_uploads = $('#attachment_image').fileupload('active')
+        console.log '------'
+        console.log progress_data
+        console.log active_uploads
+
     console.log '--jqueryfileuploader'

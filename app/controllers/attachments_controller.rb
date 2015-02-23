@@ -16,10 +16,11 @@ class AttachmentsController < ApplicationController
   end
 
   def create
-    respond_with Attachment.create(
+    respond_with attachment = Attachment.create(
       post_id:    params[:post_id],
-      title:      params[:title].original_filename,
-      file_type:  params[:title].content_type
+      title:      params[:attachment][:image].original_filename,
+      file_type:  params[:attachment][:image].content_type,
+      image:      params[:attachment][:image]
     )
   end
 

@@ -31,6 +31,9 @@ GEM
     arel (3.0.3)
     awesome_print (1.6.1)
     builder (3.0.4)
+    carrierwave (0.8.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
     coderay (1.1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -69,8 +72,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-rails (0.3.3)
-      pry (>= 0.9.10)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -97,6 +98,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     remotipart (1.2.1)
+    rmagick (2.13.4)
     sass (3.4.12)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -128,13 +130,15 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
+  carrierwave
   coffee-rails (~> 3.2.1)
   eco
   jquery-rails (~> 2.3.0)
   kaminari
-  pry-rails
+  pry
   rails (= 3.2.21)
   remotipart (~> 1.2)
+  rmagick
   sass-rails (~> 3.2.3)
   sqlite3
   thin
