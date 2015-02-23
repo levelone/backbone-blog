@@ -16,7 +16,7 @@
   <div class="attachment-container">
     <form id="new_attachment" action="/api/attachments" method="post">
       <input type="hidden" name="post_id" id="attachment_post_id" value="<%= @post.get('id') %>">
-      <input type="file" name="attachment[image]" id="attachment_image"><br>
+      <input type="file" name="attachment[image]" id="attachment_image" multiple><br>
     </form>
   </div>
 

@@ -1,5 +1,7 @@
 class BackboneBlog.Views.Post extends Backbone.View
   template: JST['posts/post']
+  tagName: 'li'
+
   events:
     'click #view_post'    : 'viewPost'
     'click #edit_post'    : 'editPost'
@@ -12,7 +14,7 @@ class BackboneBlog.Views.Post extends Backbone.View
     @router       = options.router
 
   render: ->
-    @setElement @template(post: @post)
+    @$el.html @template(post: @post)
     @
 
   # Event Listeners

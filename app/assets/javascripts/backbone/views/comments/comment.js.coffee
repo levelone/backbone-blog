@@ -13,6 +13,7 @@ class BackboneBlog.Views.Comment extends Backbone.View
 
   render: ->
     comments = @comment.collection
+
     if comments.totalPages <= 1
       $('#next_comments_page').attr('disabled', 'disabled')
       $('#previous_comments_page').attr('disabled', 'disabled')

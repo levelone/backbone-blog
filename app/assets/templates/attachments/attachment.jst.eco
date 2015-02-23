@@ -1,6 +1,8 @@
 <%= @attachment.get('id') %>.
-<%= @attachment.get('title') %>
-<img src="<%= @attachment.get('title')%>" height="250" width="250" />
+<%= @attachment.get('title') %><br/>
+<img src="<%= @attachment.get('image').url %>" height="250" width="250" /><br/>
 
 <a href="" id="edit_attachment">Edit</a>
 <a href="" id="remove_attachment" >Remove</a>
+<br/>
+<br/>
